@@ -1,0 +1,37 @@
+┌─────────────────┐
+ │ 1. DOCKER HUB   │ <─── [CI Pipeline pushes v1.1.0]
+ └────────┬────────┘
+          │
+          │ (Scans tags via API)
+          ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 2. FLUX REFLECTOR ENGINE                                               │
+ │    - ImageRepository fetches the tag list                              │
+ │    - ImagePolicy evaluates and selects v1.1.0                          │
+ └────────┬───────────────────────────────────────────────────────────────┘
+          │
+          │ (Passes approved tag)
+          ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 3. FLUX AUTOMATION ENGINE                                              │
+ │    - ImageUpdateAutomation locates the file comment locally            │
+ │    - Rewrites image tag to v1.1.0                                      │
+ │    - Uses Cluster Bootstrap Token to push changes back to Git          │
+ └────────┬───────────────────────────────────────────────────────────────┘
+          │
+          │ (Git Push)
+          ▼
+ ┌─────────────────┐
+ │ 4. GITHUB REPO  │ ───► [Manifest file updated permanently in Git]
+ └────────┬────────┘
+          │
+          │ (Core Flux Sync Engine catches new commit)
+          ▼
+ ┌────────────────────────────────────────────────────────────────────────┐
+ │ 5. KUSTOMIZE CONTROLLER & KUBERNETES                                   │
+ │    - Applies updated deployment manifest to Cluster                    │
+ │    - Cluster performs rolling update to run v1.1.0 pods                │
+ └────────────────────────────────────────────────────────────────────────┘
+
+
+
