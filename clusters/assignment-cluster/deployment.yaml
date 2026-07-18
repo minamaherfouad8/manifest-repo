@@ -12,6 +12,6 @@ spec:
     spec:
       containers:
       - name: web
-        image: registry.hub.docker.com/your-dockerhub-user/my-app:1.0.0 # {"$imagepolicy": "flux-system:my-app-policy"}
+        image: registry.hub.docker.com/minamaher/my-app:1.0.0 # {"$imagepolicy": "flux-system:my-app-policy"}
         ports:
         - containerPort: 8080
