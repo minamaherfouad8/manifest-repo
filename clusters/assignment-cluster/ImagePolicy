@@ -1,0 +1,11 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: my-app-policy
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: my-app-repo
+  policy:
+    semver:
+      range: '>=1.0.0 <2.0.0' # Automatically picks up minor and patch releases (e.g., 1.0.1, 1.1.0)
