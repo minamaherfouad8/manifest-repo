@@ -1,0 +1,22 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: my-app-automation
+  namespace: flux-system
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system # Uses the Git repo created during bootstrap
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: 'chore(gitops): auto-update my-app image to {{range .Updated.Images}}{{index .NewTag}}{{end}}'
+  update:
+    path: ./clusters/my-cluster # Path inside Git where your manifests live
+    strategy: Setters
