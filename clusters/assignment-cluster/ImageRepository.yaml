@@ -4,5 +4,5 @@ metadata:
   name: my-app-repo
   namespace: flux-system
 spec:
-  image: registry.hub.docker.com/your-dockerhub-user/my-app # Replace with your registry path
+  image: registry.hub.docker.com/mina.maher/my-app # Replace with your registry path
   interval: 1m
