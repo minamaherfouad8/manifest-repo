@@ -1,0 +1,25 @@
+FluxCD integrates directly with Kubernetes health checks to prevent a broken container from taking down live traffic:
+
+    Health Assessment: You configure health checks in your Flux Kustomization manifest:
+
+
+    apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: apps
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: ./apps
+  prune: true
+  wait: true             # Instructs Flux to wait for resources to become Ready
+  timeout: 2m            # Max time to wait before marking the deployment as failed
+
+
+  What happens on failure:
+
+   - If a new image contains a bug 
+
+   - The existing healthy pods continue serving traffic (zero downtime).
+
+  -  FluxCD’s kustomize-controller times out after 2m, marks the GitOps reconciliation status as Failed
