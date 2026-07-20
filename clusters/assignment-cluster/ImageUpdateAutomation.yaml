@@ -18,5 +18,5 @@ spec:
         name: fluxcdbot
       messageTemplate: 'chore(gitops): auto-update my-app image to {{range .Updated.Images}}{{index .NewTag}}{{end}}'
   update:
-    path: ./clusters/my-cluster # Path inside Git where your manifests live
+    path: ./clusters/assignement-cluster # Path inside Git where your manifests live
     strategy: Setters
